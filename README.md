@@ -1,7 +1,7 @@
-# Code Along: Custom Error Handling
+# Code Along: Custom Error Handling 
 
 ## Objectives
-1. Create and raise custom error messages in Ruby. 
+1. Create and raise custom error messages in Ruby.
 
 ## Introduction
 We already know that Ruby has a hierarchy of error, or `Exception`, classes, all of which inherit from the Exception class. We've become familiar with these error types:
@@ -62,11 +62,11 @@ Let's look at the example of our `Person` class and its `#get_married` method. I
 ```ruby
 class Person
   attr_accessor :name, :partner
-  
+
   def initialize(name)
     @name = name
   end
-  
+
   def get_married(person)
     self.partner = person
     person.partner = self
@@ -76,12 +76,12 @@ end
 beyonce = Person.new("Beyonce")
 beyonce.get_married("Jay-Z")
 puts beyonce.name
-``` 
-As it currently stands, we would receive a NoMethodError if we try to pass `#get_married` an argument of anything that *is not* an instance of the `Person` class. 
+```
+As it currently stands, we would receive a NoMethodError if we try to pass `#get_married` an argument of anything that *is not* an instance of the `Person` class.
 
-For example, at the bottom of our `custom_errors.rb` file, we're trying to tell Beyonce to `#get_married` to `"Jay-Z"`. The problem is that `"Jay-Z"` is a string, *not* an instance of the `Person` class. 
+For example, at the bottom of our `custom_errors.rb` file, we're trying to tell Beyonce to `#get_married` to `"Jay-Z"`. The problem is that `"Jay-Z"` is a string, *not* an instance of the `Person` class.
 
-Run the code in the `custom_errors.rb` file with the `ruby custom_errors.rb` command. You should see the following output: 
+Run the code in the `custom_errors.rb` file with the `ruby custom_errors.rb` command. You should see the following output:
 
 ```bash
 custom_errors.rb:10:in `get_married': undefined method `partner=' for "Jay-Z":String (NoMethodError)
@@ -120,7 +120,7 @@ puts beyonce.name
 Now we're ready to use our custom error inside our `#get_married` method.
 
 ### Step 2: Raising our custom error
-We need to tell our program to raise our brand new `PartnerError` when the argument passed into the `#get_married` method is *not* an instance of the `Person` class. We can do that with the `raise` keyword. Place the following code in your `#get_married` method: 
+We need to tell our program to raise our brand new `PartnerError` when the argument passed into the `#get_married` method is *not* an instance of the `Person` class. We can do that with the `raise` keyword. Place the following code in your `#get_married` method:
 
 ```ruby
 class Person
@@ -132,8 +132,8 @@ class Person
 
   def get_married(person)
     self.partner = person
-    if person.class != Person 
-      raise PartnerError 
+    if person.class != Person
+      raise PartnerError
     else
       person.partner = self
     end
@@ -162,7 +162,7 @@ We can achieve the above goal via something called **rescuing**. Before we look 
 Of course we want our program to continue running after we raise the error. It would also be nice to output a custom error message when the error is raised. Let's add a message to our `PartnerError` class:
 ```ruby
 class PartnerError < StandardError
-  def message 
+  def message
     "you must give the get_married method an argument of an instance of the person class!"
   end
 end
@@ -173,13 +173,13 @@ Now we have a nice, informative, custom error message that will make it really c
 ### Step 2: Implementing the `rescue`
 The basic pattern of error rescuing is as follows:
 ```ruby
-begin 
+begin
   raise YourCustomError
 rescue YourCustomError
 end
 ```
 
-Let's implement this code in our `#get_married` method: 
+Let's implement this code in our `#get_married` method:
 ```ruby
 def get_married(person)
     self.partner = person
@@ -220,7 +220,7 @@ class Person
   end
 
   class PartnerError < StandardError
-    def message 
+    def message
       "you must give the get_married method an argument of an instance of the person class!"
     end
   end
